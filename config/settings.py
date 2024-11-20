@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 import os
 
-import logging_config
+from config import logging_config
 from pathlib import Path
 from dotenv import load_dotenv
 

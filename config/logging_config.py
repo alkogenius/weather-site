@@ -16,7 +16,7 @@ CONFIG = {
         "file": {
             "level": "WARNING",
             "class": "logging.FileHandler",
-            "filename": "log/monitoring_zp.log",
+            "filename": "log/weather_site.log",
             "mode": "a",
             "encoding": "utf-8",
             "formatter": "verbose",
