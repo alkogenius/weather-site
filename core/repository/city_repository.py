@@ -1,5 +1,5 @@
 from core.models import City
-from core.repository import DjangoORMRepository
+from core.repository.base import DjangoORMRepository
 
 
 class CityRepository(DjangoORMRepository):

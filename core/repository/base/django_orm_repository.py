@@ -2,7 +2,7 @@ from typing import List, Optional, Type
 
 from django.db import models
 
-from core.repository.base_repository import AbstractRepository
+from core.repository.base.base_repository import AbstractRepository
 
 
 class DjangoORMRepository(AbstractRepository):

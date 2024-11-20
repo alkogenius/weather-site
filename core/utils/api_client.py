@@ -17,8 +17,8 @@ class ApiClient:
     ) -> Dict[str, Any]:
         """Выполняет запрос к API."""
         url = f"{self.base_url}/{endpoint.lstrip('/')}"
-        if "headers" not in kwargs:
-            kwargs["headers"] = {}
+        headers = kwargs.pop("headers", {})
+        kwargs["headers"] = headers
         kwargs.setdefault("timeout", self.timeout)
 
         try:
@@ -41,29 +41,44 @@ class ApiClient:
             ) from req_err
 
     def get(
-        self, endpoint: str, params: Optional[Dict[str, Any]] = None
+        self,
+        endpoint: str,
+        params: Optional[Dict[str, Any]] = None,
+        headers: Optional[Dict[str, str]] = None,
     ) -> Dict[str, Any]:
         """GET запрос к API."""
-        return self._make_request("GET", endpoint, params=params)
+        return self._make_request(
+            "GET", endpoint, params=params, headers=headers
+        )
 
     def post(
         self,
         endpoint: str,
         data: Optional[Dict[str, Any]] = None,
         json: Optional[Any] = None,
+        headers: Optional[Dict[str, str]] = None,
     ) -> Dict[str, Any]:
         """POST запрос к API."""
-        return self._make_request("POST", endpoint, data=data, json=json)
+        return self._make_request(
+            "POST", endpoint, data=data, json=json, headers=headers
+        )
 
     def put(
         self,
         endpoint: str,
         data: Optional[Dict[str, Any]] = None,
         json: Optional[Any] = None,
+        headers: Optional[Dict[str, str]] = None,
     ) -> Dict[str, Any]:
         """PUT запрос к API."""
-        return self._make_request("PUT", endpoint, data=data, json=json)
+        return self._make_request(
+            "PUT", endpoint, data=data, json=json, headers=headers
+        )
 
-    def delete(self, endpoint: str) -> Dict[str, Any]:
+    def delete(
+        self,
+        endpoint: str,
+        headers: Optional[Dict[str, str]] = None,
+    ) -> Dict[str, Any]:
         """DELETE запрос к API."""
-        return self._make_request("DELETE", endpoint)
+        return self._make_request("DELETE", endpoint, headers=headers)
