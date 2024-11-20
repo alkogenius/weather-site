@@ -14,10 +14,37 @@ django-cors-headers = "^4.6.0"
 psycopg = {extras = ["binary"], version = "^3.2.3"}
 gunicorn = "^23.0.0"
 redis = "^5.2.0"
+python-dotenv = "^1.0.1"
 
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^4.0.1"
+
+[tool.ruff]
+line-length = 79
+show-fixes = true
+output-format = "full"
+exclude = [
+    "config/settings.py",
+    "core/migrations/"
+]
+
+[tool.ruff.lint]
+select = [
+    "B",  # flake8-bugbear
+    "E",  # pycodestyle error
+    "F",  # pyflakes
+    "I",  # isort
+    "UP",  # pyupgrade
+    "W",  # pycodestyle warning
+]
+ignore = []
+fixable = ["ALL"]
+unfixable = []
+ignore-init-module-imports = true
+
+[tool.ruff.lint.isort]
+known-first-party = ["core",]
 
 [build-system]
 requires = ["poetry-core"]
