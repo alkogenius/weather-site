@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
-from typing import Any, List
+from typing import Any, List, Optional
 
-from cfgv import Optional
 from django.db import models
 
 

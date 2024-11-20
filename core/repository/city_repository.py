@@ -9,4 +9,4 @@ class CityRepository(DjangoORMRepository):
         super().__init__(City)
 
     def filter_city_by_name(self, name) -> City:
-        return self.model.objects.filter(city_name=name)
+        return self.model.objects.filter(city_name__iexact=name).first()
