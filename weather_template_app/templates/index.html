@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Инфо о погоде{% endblock %}
+
+{% block content %}
+    <h1>Погода</h1>
+    <form method="post" class="weather-form">
+        <h4 style="text-align: center;">Обработка запроса без JS</h4>
+        {% csrf_token %}
+        <input type="text" class="city-input" name="city" placeholder="Введите название города" required>
+        <button class="submit-button" type="submit">Узнать погоду</button>
+    </form>
+
+    {% if error %}
+        <div class="error" style="text-align: center; color: red; margin-top: 20px;">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    {% if weather %}
+        <div class="weather" style="text-align: center; margin-top: 20px;">
+            <h2>Погода в городе {{ weather.city }}</h2>
+            <div class="weather-info">Температура: {{ weather.temp }}°C</div>
+            <div class="weather-info">Давление: {{ weather.def_pressure_mm }} мм рт. ст.</div>
+            <div class="weather-info">Скорость ветра: {{ weather.wind_speed }} м/с</div>
+            <a class="weather-info" href="{{ weather.url }}">Узнать подробности</a>
+        </div>
+    {% endif %}
+    <div class="weather-form" style="margin-top: 25px;">
+        <h4 style="text-align: center;">Обработка запроса с помощью JS</h4>
+        <input type="text" class="city-input" id="city" placeholder="Введите название города" required>
+        <button class="submit-button" id="search-button">Узнать погоду</button>
+    </div>
+    <div class="weather" id="weather-info" style="text-align: center; margin-top: 20px; display: none;">
+        <h2 id="city-name"></h2>
+        <div class="weather-info" id="temp"></div>
+        <div class="weather-info" id="pressure"></div>
+        <div class="weather-info" id="wind-speed"></div>
+    <a class="weather-info" id="weather-url" href="" target="_blank">Узнать подробности</a>
+</div>
+{% endblock %}

@@ -69,6 +69,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "drf_spectacular",
     "core",
+    "weather_api_app",
+    "weather_template_app"
 ]
 
 MIDDLEWARE = [
