@@ -10,6 +10,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends curl \
     && curl -sSL https://install.python-poetry.org | python3 -
 
+
 WORKDIR /opt/app
 
 COPY poetry.lock pyproject.toml ./
@@ -18,7 +19,7 @@ RUN poetry install --no-root --only main
 
 #_________________________________________________________________
 
-FROM python:3.13-slim
+FROM python:3.13-slim AS final
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
