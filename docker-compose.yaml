@@ -1,0 +1,61 @@
+version: '3.3'
+
+services:
+  weather-app:
+    build: 
+      context: ./weather_site
+      dockerfile: Dockerfile
+    restart: always
+    container_name: weather-app
+    ports:
+      - 8000
+    command: gunicorn --bind 0.0.0.0:8000 config.wsgi:application
+    volumes:
+      - logs_volume:/opt/app/log
+      - static_volume:/opt/app/static
+    networks:
+      - weather-network
+    depends_on:
+      - redis
+      - postgres   
+  redis:
+    image: redis:alpine
+    container_name: redis
+    restart: always
+    ports:
+      - 6379
+    networks:
+      - weather-network
+    volumes:
+      - redis_data:/root/redis
+    environment:
+      - REDIS_PORT=6379
+      - REDIS_DATABASES=16
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    env_file:
+      - ./weather_site/.env
+    ports:
+      - 5432
+    networks:
+      - weather-network
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # - ./db_initial:/docker-entrypoint-initdb.d/
+    
+
+networks:
+  weather-network:
+    driver: bridge
+
+volumes:
+  redis_data:
+  postgres_data:
+  logs_volume:
+  static_volume:

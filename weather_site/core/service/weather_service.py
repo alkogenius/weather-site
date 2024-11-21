@@ -27,7 +27,7 @@ class WeatherService:
         )
         cached_weather = cache.get(city_name)
         if cached_weather:
-            logger.debug("Информация о " "погоде найдена " "в кэш-хранилище")
+            logger.debug("Информация о погоде найдена в кэш-хранилище")
             return cached_weather
         city = self._city_repository.filter_city_by_name(city_name)
         if not city:
@@ -37,7 +37,7 @@ class WeatherService:
             weather = self._yandex_api_s.get_weather_info(
                 latitude=city.latitude, longitude=city.longitude
             )
-            logger.debug("Погода получена " "от яндекса и записана" " в кеш")
+            logger.debug("Погода получена от яндекса и записана в кеш")
             cache.set(city_name, weather, timeout=1800)
             return weather
         except (ExternalApiError, TokenIsNotValid) as e:
